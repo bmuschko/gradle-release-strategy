@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'org.ajoberstar.release-opinion' version '1.7.2'
+}
+
+group = 'com.bmuschko'
+
+import org.ajoberstar.gradle.git.release.opinion.Strategies
+
+release {
+    versionStrategy Strategies.FINAL
+    defaultVersionStrategy = Strategies.SNAPSHOT
+    tagStrategy {
+        generateMessage = { version -> "Version ${project.version}" }
+    }
+}
+
+tasks.release.dependsOn assemble
