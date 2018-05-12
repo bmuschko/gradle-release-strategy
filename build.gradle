@@ -1,7 +1,9 @@
 plugins {
     id 'java'
+    id 'maven-publish'
     id 'org.ajoberstar.grgit' version '1.7.2'
     id 'org.ajoberstar.release-opinion' version '1.7.2'
+    id 'com.jfrog.bintray' version '1.8.0'
 }
 
 group = 'com.bmuschko'
@@ -16,4 +18,45 @@ release {
     }
 }
 
-tasks.release.dependsOn assemble
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+bintray {
+    user = resolveProperty('BINTRAY_USER', 'bintrayUser')
+    key = resolveProperty('BINTRAY_KEY', 'bintrayKey')
+    publications = ['mavenJava']
+    publish = true
+
+    pkg {
+        repo = 'experimental'
+        name = 'com.bmuschko:gradle-release-strategy'
+        desc = 'Release strategy interfering project version from latest Git tag.'
+        websiteUrl = "https://github.com/bmuschko/${project.name}"
+        issueTrackerUrl = "https://github.com/bmuschko/${project.name}/issues"
+        vcsUrl = "https://github.com/bmuschko/${project.name}.git"
+        licenses = ['Apache-2.0']
+        labels = ['gradle', 'release']
+        publicDownloadNumbers = true
+        githubRepo = "bmuschko/${project.name}"
+
+        version {
+            released  = new Date()
+            vcsTag = "v$project.version"
+        }
+    }
+}
+
+String resolveProperty(String envVarKey, String projectPropKey) {
+    String propValue = System.getenv()[envVarKey]
+
+    if(propValue) {
+        return propValue
+    }
+
+    hasProperty(projectPropKey) ? getProperty(projectPropKey) : null
+}
