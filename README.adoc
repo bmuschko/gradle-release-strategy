@@ -1,0 +1,3 @@
+= Versioning and release strategy for Gradle projects image:https://travis-ci.org/bmuschko/gradle-release-strategy.svg?branch=master["Build Status", link="https://travis-ci.org/bmuschko/gradle-release-strategy"]
+
+Implements a versioning and release strategy standing on the shoulders of Git tags. Upon triggering a release, a new tag is created and pushed to the remote repository. On Travis CI, a release stage is kicked off whenever the commit points to a tag publishing the artifact to Bintray.
