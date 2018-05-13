@@ -54,7 +54,7 @@ bintray {
 String resolveProperty(String envVarKey, String projectPropKey) {
     String propValue = System.getenv()[envVarKey]
 
-    if(propValue) {
+    if (propValue) {
         return propValue
     }
 
