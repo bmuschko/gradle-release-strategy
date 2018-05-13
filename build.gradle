@@ -45,7 +45,7 @@ bintray {
         githubRepo = "bmuschko/${project.name}"
 
         version {
-            released  = new Date()
+            released = new Date()
             vcsTag = "v$project.version"
         }
     }
