@@ -53,10 +53,5 @@ bintray {
 
 String resolveProperty(String envVarKey, String projectPropKey) {
     String propValue = System.getenv()[envVarKey]
-
-    if (propValue) {
-        return propValue
-    }
-
-    hasProperty(projectPropKey) ? getProperty(projectPropKey) : null
+    propValue ?: findProperty(projectPropKey)
 }
